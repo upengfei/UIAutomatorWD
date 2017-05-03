@@ -361,6 +361,7 @@ public class RouterNanoHTTPD extends NanoHTTPD {
 
         private Pattern createUriPattern() {
             String patternUri = uri;
+
             Matcher matcher = PARAM_PATTERN.matcher(patternUri);
             int start = 0;
             while (matcher.find(start)) {
