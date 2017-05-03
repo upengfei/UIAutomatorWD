@@ -3,6 +3,8 @@ package com.macaca.android.testing.server.controllers;
 import com.macaca.android.testing.server.models.Methods;
 import com.macaca.android.testing.server.models.Response;
 import com.macaca.android.testing.server.models.Status;
+import com.macaca.android.testing.server.common.Element;
+import com.macaca.android.testing.server.common.Elements;
 
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.router.RouterNanoHTTPD;
@@ -27,12 +29,18 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
     public static ElementController getComputedCss;
     public static ElementController getRect;
 
+    private Elements elements = Elements.getGlobal();
+
     static {
         click = new ElementController() {
             @Override
             public NanoHTTPD.Response get(RouterNanoHTTPD.UriResource uriResource, Map<String, String> urlParams, NanoHTTPD.IHTTPSession session) {
                 String sessionId = urlParams.get("sessionId");
+                try {
+                    
+                } catch (Exception e) {
 
+                }
                 return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(Status.NoSuchElement, sessionId).toString());
             }
         };
