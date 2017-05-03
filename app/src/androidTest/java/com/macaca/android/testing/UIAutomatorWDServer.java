@@ -66,6 +66,9 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
         //ScreenshotRouter
         addRoute(prefix + "/screenshot", Methods.GET, ScreenshotController.getScreenshot);
 
+        //SourceRouter
+        addRoute(prefix + "/source", Methods.GET, SourceController.source);
+
         //TimeoutsRouter
         addRoute(prefix + "/timeouts/implicit_wait", Methods.POST, TimeoutsController.implicitWait);
 
