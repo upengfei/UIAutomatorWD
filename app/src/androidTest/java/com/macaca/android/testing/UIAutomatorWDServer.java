@@ -16,68 +16,68 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
 
     private static volatile UIAutomatorWDServer singleton;
 
-    private String prefix = "/wd/hub/session/:sessionId";
+    private String sessionRoutePrefix = "/wd/hub/session/:sessionId";
 
     private UIAutomatorWDServer() throws IOException {
-        super(8080);
-
-        //Window Router
-        addRoute(prefix + "/window_handle", Methods.GET, WindowController.getWindow);
-        addRoute(prefix + "/window_handles", Methods.GET, WindowController.getWindows);
-        addRoute(prefix + "/window", Methods.POST, WindowController.setWindow);
-        addRoute(prefix + "/window", Methods.DELETE, WindowController.deleteWindow);
-        addRoute(prefix + "/window/:windowHandle/size", Methods.GET, WindowController.getWindowSize);
-        addRoute(prefix + "/window/:windowHandle/size", Methods.POST, WindowController.setWindowSize);
-        addRoute(prefix + "/window/:windowHandle/maximize", Methods.POST, WindowController.maximize);
-        addRoute(prefix + "/frame", Methods.POST, WindowController.setFrame);
+        super(8081);
 
         //SessionRouter
         addRoute("/wd/hub/session", Methods.POST, SessionController.createSession);
         addRoute("/wd/hub/sessions", Methods.GET, SessionController.getSessions);
         addRoute("/wd/hub/session/:sessionId", Methods.DELETE, SessionController.delSession);
 
+        //Window Router
+        addRoute(sessionRoutePrefix + "/window_handle", Methods.GET, WindowController.getWindow);
+        addRoute(sessionRoutePrefix + "/window_handles", Methods.GET, WindowController.getWindows);
+        addRoute(sessionRoutePrefix + "/window", Methods.POST, WindowController.setWindow);
+        addRoute(sessionRoutePrefix + "/window", Methods.DELETE, WindowController.deleteWindow);
+        addRoute(sessionRoutePrefix + "/window/:windowHandle/size", Methods.GET, WindowController.getWindowSize);
+        addRoute(sessionRoutePrefix + "/window/:windowHandle/size", Methods.POST, WindowController.setWindowSize);
+        addRoute(sessionRoutePrefix + "/window/:windowHandle/maximize", Methods.POST, WindowController.maximize);
+        addRoute(sessionRoutePrefix + "/frame", Methods.POST, WindowController.setFrame);
+
         //ContextRouter
-        addRoute(prefix + "/context", Methods.GET, ContextController.getContext);
-        addRoute(prefix + "/context", Methods.POST, ContextController.setContext);
-        addRoute(prefix + "/contexts", Methods.GET, ContextController.getContexts);
+        addRoute(sessionRoutePrefix + "/context", Methods.GET, ContextController.getContext);
+        addRoute(sessionRoutePrefix + "/context", Methods.POST, ContextController.setContext);
+        addRoute(sessionRoutePrefix + "/contexts", Methods.GET, ContextController.getContexts);
 
         //AlertRouter
-        addRoute(prefix + "/accept_alert", Methods.POST, AlertController.acceptAlert);
-        addRoute(prefix + "/dismiss_alert", Methods.POST, AlertController.dismissAlert);
-        addRoute(prefix + "/alert_text", Methods.GET, AlertController.alertText);
-        addRoute(prefix + "/alert_text", Methods.POST, AlertController.alertKeys);
+        addRoute(sessionRoutePrefix + "/accept_alert", Methods.POST, AlertController.acceptAlert);
+        addRoute(sessionRoutePrefix + "/dismiss_alert", Methods.POST, AlertController.dismissAlert);
+        addRoute(sessionRoutePrefix + "/alert_text", Methods.GET, AlertController.alertText);
+        addRoute(sessionRoutePrefix + "/alert_text", Methods.POST, AlertController.alertKeys);
 
         //ElementRouter
-        addRoute(prefix + "/click", Methods.POST, ElementController.click);
-        addRoute(prefix + "/element", Methods.POST, ElementController.findElement);
-        addRoute(prefix + "/elements", Methods.POST, ElementController.findElements);
-        addRoute(prefix + "/element/:elementId/element", Methods.POST, ElementController.findElement);
-        addRoute(prefix + "/element/:elementId/elements", Methods.POST, ElementController.findElements);
-        addRoute(prefix + "/element/:elementId/value", Methods.POST, ElementController.setValue);
-        addRoute(prefix + "/element/:elementId/click", Methods.POST, ElementController.click);
-        addRoute(prefix + "/element/:elementId/text", Methods.GET, ElementController.getText);
-        addRoute(prefix + "/element/:elementId/clear", Methods.POST, ElementController.clearText);
-        addRoute(prefix + "/element/:elementId/displayed", Methods.GET, ElementController.isDisplayed);
-        addRoute(prefix + "/element/:elementId/attribute/:name", Methods.GET, ElementController.getAttribute);
-        addRoute(prefix + "/element/:elementId/property/:name", Methods.GET, ElementController.getProperty);
-        addRoute(prefix + "/element/:elementId/css/:propertyName", Methods.GET, ElementController.getComputedCss);
-        addRoute(prefix + "/element/:elementId/rect", Methods.GET, ElementController.getRect);
+        addRoute(sessionRoutePrefix + "/click", Methods.POST, ElementController.click);
+        addRoute(sessionRoutePrefix + "/element", Methods.POST, ElementController.findElement);
+        addRoute(sessionRoutePrefix + "/elements", Methods.POST, ElementController.findElements);
+        addRoute(sessionRoutePrefix + "/element/:elementId/element", Methods.POST, ElementController.findElement);
+        addRoute(sessionRoutePrefix + "/element/:elementId/elements", Methods.POST, ElementController.findElements);
+        addRoute(sessionRoutePrefix + "/element/:elementId/value", Methods.POST, ElementController.setValue);
+        addRoute(sessionRoutePrefix + "/element/:elementId/click", Methods.POST, ElementController.click);
+        addRoute(sessionRoutePrefix + "/element/:elementId/text", Methods.GET, ElementController.getText);
+        addRoute(sessionRoutePrefix + "/element/:elementId/clear", Methods.POST, ElementController.clearText);
+        addRoute(sessionRoutePrefix + "/element/:elementId/displayed", Methods.GET, ElementController.isDisplayed);
+        addRoute(sessionRoutePrefix + "/element/:elementId/attribute/:name", Methods.GET, ElementController.getAttribute);
+        addRoute(sessionRoutePrefix + "/element/:elementId/property/:name", Methods.GET, ElementController.getProperty);
+        addRoute(sessionRoutePrefix + "/element/:elementId/css/:propertyName", Methods.GET, ElementController.getComputedCss);
+        addRoute(sessionRoutePrefix + "/element/:elementId/rect", Methods.GET, ElementController.getRect);
 
         //ScreenshotRouter
-        addRoute(prefix + "/screenshot", Methods.GET, ScreenshotController.getScreenshot);
+        addRoute(sessionRoutePrefix + "/screenshot", Methods.GET, ScreenshotController.getScreenshot);
 
         //SourceRouter
-        addRoute(prefix + "/source", Methods.GET, SourceController.source);
+        addRoute(sessionRoutePrefix + "/source", Methods.GET, SourceController.source);
 
         //TimeoutsRouter
-        addRoute(prefix + "/timeouts/implicit_wait", Methods.POST, TimeoutsController.implicitWait);
+        addRoute(sessionRoutePrefix + "/timeouts/implicit_wait", Methods.POST, TimeoutsController.implicitWait);
 
         //UrlRouter
-        addRoute(prefix + "/url", Methods.POST, UrlController.getUrl);
-        addRoute(prefix + "/url", Methods.GET, UrlController.url);
-        addRoute(prefix + "/forward", Methods.POST, UrlController.forward);
-        addRoute(prefix + "/back", Methods.POST, UrlController.back);
-        addRoute(prefix + "/refresh", Methods.POST, UrlController.refresh);
+        addRoute(sessionRoutePrefix + "/url", Methods.POST, UrlController.getUrl);
+        addRoute(sessionRoutePrefix + "/url", Methods.GET, UrlController.url);
+        addRoute(sessionRoutePrefix + "/forward", Methods.POST, UrlController.forward);
+        addRoute(sessionRoutePrefix + "/back", Methods.POST, UrlController.back);
+        addRoute(sessionRoutePrefix + "/refresh", Methods.POST, UrlController.refresh);
 
         start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
         System.out.println("\nRunning! Point your browsers to http://localhost:8080/ \n");
