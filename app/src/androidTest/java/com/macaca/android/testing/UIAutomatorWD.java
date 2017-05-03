@@ -19,6 +19,7 @@ public class UIAutomatorWD {
         String SDPATH = Environment.getExternalStorageDirectory() + "/";
         System.out.print("------===========");
         System.out.print(SDPATH);
+
         while (true) {
             SystemClock.sleep(1000);
         }

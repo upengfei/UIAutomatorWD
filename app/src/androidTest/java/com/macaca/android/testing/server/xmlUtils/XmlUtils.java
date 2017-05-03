@@ -16,7 +16,8 @@
 package com.macaca.android.testing.server.xmlUtils;
 
 import android.view.accessibility.AccessibilityNodeInfo;
-import com.android.uiautomator.core.UiSelector;
+import android.support.test.uiautomator.UiSelector;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;

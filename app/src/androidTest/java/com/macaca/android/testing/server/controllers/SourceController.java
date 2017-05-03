@@ -9,7 +9,7 @@ import com.macaca.android.testing.server.models.Methods;
 import com.macaca.android.testing.server.models.Response;
 import com.macaca.android.testing.server.models.Status;
 
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.router.RouterNanoHTTPD;

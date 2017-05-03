@@ -24,4 +24,5 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:' + rootProject.runnerVersion;
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:' + rootProject.uiautomatorVersion;
     compile 'org.nanohttpd:nanohttpd:2.3.1';
+    compile 'com.alibaba:fastjson:1.2.31'
 }

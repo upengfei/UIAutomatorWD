@@ -16,7 +16,7 @@
 package com.macaca.android.testing.server.xmlUtils;
 
 import android.view.Display;
-import com.android.uiautomator.core.UiDevice;
+import android.support.test.uiautomator.UiDevice;
 import android.view.InputEvent;
 
 import static com.macaca.android.testing.server.xmlUtils.ReflectionUtils.*;
