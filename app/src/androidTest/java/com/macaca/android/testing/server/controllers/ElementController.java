@@ -65,7 +65,6 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                     String value = body.get("postData");
                     JSONObject postData = JSON.parseObject(value);
 
-                    int ass= 1;
                     String strategy = (String)postData.get("strategy");
                     String selector = (String) postData.get("selector");
 
@@ -95,7 +94,7 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                 } catch (Exception e) {
                     //Log.i("=================");
                 }
-                return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(a, sessionId).toString());
+                return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(result, sessionId).toString());
             }
         };
 
@@ -207,12 +206,12 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
         return NanoHTTPD.Response.Status.OK;
     }
 
-    private static ArrayList<Element> getElements(final UiSelector sel)
-            throws UiObjectNotFoundException {
-        return elements.getElements(sel);
-    }
+//    private static ArrayList<Element> getElements(final UiSelector sel)
+//            throws UiObjectNotFoundException {
+//        return elements.getElements(sel);
+//    }
 
-    private static  JSONObject getElement(final UiSelector sel) throws JSONException, Exception {
+    private static  JSONObject getElement(final UiSelector sel) throws Exception {
         final JSONObject res = new JSONObject();
         final Element element = getElements().getElement(sel);
         return (JSONObject) res.put("ELEMENT", element.getId());

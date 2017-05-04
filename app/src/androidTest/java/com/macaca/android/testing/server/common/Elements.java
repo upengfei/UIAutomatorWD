@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.regex.Pattern;
 
+import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.UiDevice;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.UiObject;
+import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 
@@ -26,6 +30,7 @@ public class Elements {
 	 * 
 	 */
 	private Hashtable<String, Element> elems;
+	private UiDevice mDevice;
 
 	/**
 	 * Constructor
@@ -33,6 +38,7 @@ public class Elements {
 	public Elements() {
 		setCounter(0);
 		elems = new Hashtable<String, Element>();
+		mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 	}
 
 	/**
@@ -49,7 +55,7 @@ public class Elements {
 	 * @param element
 	 * @return res
 	 */
-	public Element addElement(UiObject element) {
+	public Element addElement(UiObject2 element) {
 		setCounter(getCounter() + 1);
 		String key = getCounter().toString();
 		Element elem = new Element(key, element);
@@ -71,59 +77,61 @@ public class Elements {
 	 * @throws Exception
 	 */
 	public Element getElement(UiSelector sel) throws Exception {
-		UiObject el = new UiObject(sel);
-
-		if (el.exists()) {
+		UiObject2 el = null;
+//		UiObject el = new UiObject(sel);
+		el = mDevice.findObject(By.text("Camera"));
+		el.click();
+//		if (el.exists()) {
 			return addElement(el);
-		} else {
-			throw new Exception("not found");
-		}
+//		} else {
+//			throw new Exception("not found");
+//		}
 	}
 
-	/**
-	 * @param selector
-	 * @return res
-	 * @throws UiObjectNotFoundException
-	 */
-	public ArrayList<Element> getElements(UiSelector selector)
-			throws UiObjectNotFoundException {
-		String str = selector.toString();
-		boolean index = str.contains("CLASS_REGEX=");
-		boolean endsInstance = Pattern.compile(".*INSTANCE=\\d+]$")
-				.matcher(str).matches();
-
-		ArrayList<Element> elements = new ArrayList<Element>();
-
-		if (endsInstance) {
-			UiObject obj = new UiObject(selector);
-			if (obj != null && obj.exists()) {
-				elements.add(addElement(obj));
-			}
-			return elements;
-		}
-
-		UiObject obj;
-		UiSelector tmp;
-		int counter = 0;
-
-		boolean keep = true;
-		while (keep) {
-			if (index) {
-				tmp = selector.index(counter);
-			} else {
-				tmp = selector.instance(counter);
-			}
-			obj = new UiObject(tmp);
-			counter++;
-
-			if (obj != null && obj.exists()) {
-				elements.add(addElement(obj));
-			} else {
-				keep = false;
-			}
-		}
-		return elements;
-	}
+//	/**
+//	 * @param selector
+//	 * @return res
+//	 * @throws UiObjectNotFoundException
+//	 */
+//	public ArrayList<Element> getElements(UiSelector selector)
+//			throws UiObjectNotFoundException {
+//		String str = selector.toString();
+//		boolean index = str.contains("CLASS_REGEX=");
+//		boolean endsInstance = Pattern.compile(".*INSTANCE=\\d+]$")
+//				.matcher(str).matches();
+//
+//		ArrayList<Element> elements = new ArrayList<Element>();
+//
+//		if (endsInstance) {
+//			UiObject obj = new UiObject(selector);
+//			if (obj != null && obj.exists()) {
+//				elements.add(addElement(obj));
+//			}
+//			return elements;
+//		}
+//
+//		UiObject obj;
+//		UiSelector tmp;
+//		int counter = 0;
+//
+//		boolean keep = true;
+//		while (keep) {
+//			if (index) {
+//				tmp = selector.index(counter);
+//			} else {
+//				tmp = selector.instance(counter);
+//			}
+//			obj = new UiObject(tmp);
+//			counter++;
+//
+//			if (obj != null && obj.exists()) {
+//				elements.add(addElement(obj));
+//			} else {
+//				keep = false;
+//			}
+//		}
+//		return elements;
+//	}
 
 	/**
 	 * @param instance

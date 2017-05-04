@@ -2,6 +2,7 @@ package com.macaca.android.testing.server.common;
 
 import android.support.test.uiautomator.Configurator;
 import android.support.test.uiautomator.UiObject;
+import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
 /**
@@ -12,7 +13,7 @@ public class Element {
 	/**
 	 *
 	 */
-	public UiObject element;
+	public UiObject2 element;
 	/**
 	 *
 	 */
@@ -22,7 +23,7 @@ public class Element {
 	 * @param id
 	 * @param element
 	 */
-	Element(String id, UiObject element) {
+	Element(String id, UiObject2 element) {
 		this.element = element;
 		this.id = id;
 	}
@@ -31,8 +32,8 @@ public class Element {
 	 * @return res
 	 * @throws UiObjectNotFoundException
 	 */
-	public boolean click() throws UiObjectNotFoundException {
-		return element.click();
+	public void click() throws UiObjectNotFoundException {
+		 element.click();
 	}
 
 	/**
@@ -55,27 +56,11 @@ public class Element {
 	 * @return res
 	 * @throws UiObjectNotFoundException
 	 */
-	public boolean setText(String text) throws UiObjectNotFoundException {
+	public void setText(String text) throws UiObjectNotFoundException {
 		Configurator config = Configurator.getInstance();
 		config.setKeyInjectionDelay(20);
-		Boolean success = element.setText(text);
+		element.setText(text);
 		config.setKeyInjectionDelay(0);
-		return success;
-	}
-
-	/**
-	 * @throws UiObjectNotFoundException
-	 */
-	public void clearText() throws UiObjectNotFoundException {
-		element.clearTextField();
-	}
-
-	/**
-	 * @return res
-	 * @throws UiObjectNotFoundException
-	 */
-	public boolean isDisplayed() throws UiObjectNotFoundException {
-		return element.waitForExists(500);
 	}
 
 	/**
@@ -98,29 +83,7 @@ public class Element {
 		return true;
 	}
 
-	/**
-	 * @return res
-	 * @throws UiObjectNotFoundException
-	 */
-	public boolean pinch(String direction, int percent, int steps) throws UiObjectNotFoundException {
-		if (direction.equals("in")) {
-			element.pinchIn(percent, steps);
-		} else if (direction.equals("out")) {
-			element.pinchOut(percent, steps);
-		}
-		return true;
-	}
-
-	/**
-	 * @return res
-	 * @throws UiObjectNotFoundException
-	 */
-	public boolean drag(int x, int y, int steps) throws UiObjectNotFoundException {
-		element.dragTo(x, y, steps);
-		return true;
-	}
-
-	public UiObject getUiObject() {
+	public UiObject2 getUiObject() {
 		return this.element;
 	}
 }
