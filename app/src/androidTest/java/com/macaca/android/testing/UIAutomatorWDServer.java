@@ -21,6 +21,9 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
     private UIAutomatorWDServer() throws IOException {
         super(8080);
 
+        //Home
+        //addRoute(sessionRoutePrefix + "/", Methods.GET, HomeController.home);
+
         //Window Router
         addRoute(sessionRoutePrefix + "/window_handle", Methods.GET, WindowController.getWindow);
         addRoute(sessionRoutePrefix + "/window_handles", Methods.GET, WindowController.getWindows);
