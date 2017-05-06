@@ -4,6 +4,8 @@ import com.macaca.android.testing.server.models.Methods;
 import com.macaca.android.testing.server.models.Response;
 import com.macaca.android.testing.server.models.Status;
 
+import com.alibaba.fastjson.JSONObject;
+
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.router.RouterNanoHTTPD;
 
@@ -30,7 +32,7 @@ public class WindowController extends RouterNanoHTTPD.DefaultHandler {
             public NanoHTTPD.Response get(RouterNanoHTTPD.UriResource uriResource, Map<String, String> urlParams, NanoHTTPD.IHTTPSession session) {
                 String sessionId = urlParams.get("sessionId");
 
-                return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(Status.NoSuchElement, sessionId).toString());
+                return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(new JSONObject(), sessionId).toString());
             }
         };
 

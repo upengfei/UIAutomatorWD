@@ -1,7 +1,8 @@
 package com.macaca.android.testing.server.models;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * Created by xdf on 03/05/2017.
@@ -22,6 +23,12 @@ public class Response {
     }
 
     public Response(JSONObject value, String sessionId) {
+        this.status = 0;
+        this.value = value;
+        this.sessionId = sessionId;
+    }
+
+    public Response(JSONArray value, String sessionId) {
         this.status = 0;
         this.value = value;
         this.sessionId = sessionId;

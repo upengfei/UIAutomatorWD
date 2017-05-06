@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 21
     buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
         minSdkVersion 18
-        targetSdkVersion 24
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -18,10 +18,21 @@ android {
     }
     productFlavors {
     }
+    buildToolsVersion '25.0.0'
+    testOptions {
+        unitTests.all {
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen {false}
+                showStandardStreams = true
+            }
+        }
+    }
 }
 
 dependencies {
     androidTestCompile 'com.android.support.test:runner:' + rootProject.runnerVersion;
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:' + rootProject.uiautomatorVersion;
     compile 'org.nanohttpd:nanohttpd:2.3.1';
+    compile 'com.alibaba:fastjson:1.2.31'
 }
