@@ -1,5 +1,6 @@
 package com.macaca.android.testing.server.models;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
@@ -22,6 +23,12 @@ public class Response {
     }
 
     public Response(JSONObject value, String sessionId) {
+        this.status = 0;
+        this.value = value;
+        this.sessionId = sessionId;
+    }
+
+    public Response(JSONArray value, String sessionId) {
         this.status = 0;
         this.value = value;
         this.sessionId = sessionId;

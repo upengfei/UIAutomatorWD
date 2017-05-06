@@ -15,10 +15,7 @@ import java.io.File;
 public class UIAutomatorWD {
     @Test
     public void useAppContext() throws Exception {
-        UIAutomatorWDServer testa = UIAutomatorWDServer.getInstance();;
-        String SDPATH = Environment.getExternalStorageDirectory() + "/";
-        System.out.print("------===========");
-        System.out.print(SDPATH);
+        UIAutomatorWDServer server = UIAutomatorWDServer.getInstance();
 
         while (true) {
             SystemClock.sleep(1000);

@@ -2,25 +2,18 @@ package com.macaca.android.testing.server.common;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.regex.Pattern;
+import java.util.List;
 
-import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.BySelector;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObject2;
-import android.support.test.uiautomator.UiObjectNotFoundException;
-import android.support.test.uiautomator.UiSelector;
 
 /**
  * @author xdf
  *
  */
 public class Elements {
-	/**
-	 * 
-	 */
-	private Integer counter;
 
 	/**
 	 * global singleton
@@ -36,7 +29,6 @@ public class Elements {
 	 * Constructor
 	 */
 	public Elements() {
-		setCounter(0);
 		elems = new Hashtable<String, Element>();
 		mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 	}
@@ -56,11 +48,21 @@ public class Elements {
 	 * @return res
 	 */
 	public Element addElement(UiObject2 element) {
-		setCounter(getCounter() + 1);
-		String key = getCounter().toString();
-		Element elem = new Element(key, element);
-		getElems().put(key, elem);
+		Element elem = new Element("1", element);
+		getElems().put("1", elem);
 		return elem;
+	}
+
+	public List<Element> addElements(List<UiObject2> elements) {
+		List<Element> elems = new ArrayList<Element>();
+		for(int i = 0; i < elements.size(); i++) {
+			int index = i + 1;
+			Element elem = new Element(index + "", elements.get(i));
+			getElems().put(index + "", elem);
+			elems.add(elem);
+		}
+
+		return elems;
 	}
 
 	/**
@@ -76,16 +78,24 @@ public class Elements {
 	 * @return res
 	 * @throws Exception
 	 */
-	public Element getElement(UiSelector sel) throws Exception {
-		UiObject2 el = null;
-//		UiObject el = new UiObject(sel);
-		el = mDevice.findObject(By.text("Camera"));
-		el.click();
-//		if (el.exists()) {
-			return addElement(el);
-//		} else {
-//			throw new Exception("not found");
-//		}
+	public Element getElement(BySelector sel) throws Exception {
+		UiObject2 el = mDevice.findObject(sel);
+		Element result = addElement(el);
+		if (el != null) {
+			return result;
+		} else {
+			throw new Exception("not found");
+		}
+	}
+
+	public List<Element> getMultiElement(BySelector sel) throws Exception {
+		List<UiObject2> el = mDevice.findObjects(sel);
+		List<Element> result = addElements(el);
+		if (result != null) {
+			return result;
+		} else {
+			throw new Exception("not found");
+		}
 	}
 
 //	/**
@@ -138,20 +148,6 @@ public class Elements {
 	 */
 	public static void setInstance(Elements instance) {
 		Elements.global = instance;
-	}
-
-	/**
-	 * @return res
-	 */
-	public Integer getCounter() {
-		return counter;
-	}
-
-	/**
-	 * @param counter
-	 */
-	public void setCounter(Integer counter) {
-		this.counter = counter;
 	}
 
 	/**

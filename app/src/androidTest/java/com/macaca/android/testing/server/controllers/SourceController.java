@@ -48,27 +48,18 @@ public class SourceController extends RouterNanoHTTPD.DefaultHandler {
                     mDevice.dumpWindowHierarchy(dump);
                 } catch (IOException e) {
                 }
-
                 dump.setReadable(true);
-
-
                 String res = "";
                 try {
-
                     FileInputStream fin = new FileInputStream(dump.getAbsolutePath());
                     int length = fin.available();
-
                     byte[] buffer = new byte[length];
                     fin.read(buffer);
-
                     res = EncodingUtils.getString(buffer, "UTF-8");
-
                     fin.close();
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 JSONObject a = new JSONObject();
                 a.put("value", res);
                 return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(a, sessionId).toString());

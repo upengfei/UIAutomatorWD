@@ -57,7 +57,7 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
         addRoute(sessionRoutePrefix + "/element/:elementId/clear", Methods.POST, ElementController.clearText);
         addRoute(sessionRoutePrefix + "/element/:elementId/displayed", Methods.GET, ElementController.isDisplayed);
         addRoute(sessionRoutePrefix + "/element/:elementId/attribute/:name", Methods.GET, ElementController.getAttribute);
-        addRoute(sessionRoutePrefix + "/element/:elementId/property/:name", Methods.GET, ElementController.getProperty);
+        addRoute(sessionRoutePrefix + "/element/:elementId/property/:name", Methods.GET, ElementController.getAttribute);
         addRoute(sessionRoutePrefix + "/element/:elementId/css/:propertyName", Methods.GET, ElementController.getComputedCss);
         addRoute(sessionRoutePrefix + "/element/:elementId/rect", Methods.GET, ElementController.getRect);
 
@@ -78,9 +78,9 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
         addRoute(sessionRoutePrefix + "/refresh", Methods.POST, UrlController.refresh);
 
         //SessionRouter
-//        addRoute("/wd/hub/session", Methods.POST, SessionController.createSession);
-//        addRoute("/wd/hub/sessions", Methods.GET, SessionController.getSessions);
-//        addRoute("/wd/hub/session/:sessionId", Methods.DELETE, SessionController.delSession);
+        addRoute("/wd/hub/session", Methods.POST, SessionController.createSession);
+        addRoute("/wd/hub/sessions", Methods.GET, SessionController.getSessions);
+        addRoute("/wd/hub/session/:sessionId", Methods.DELETE, SessionController.delSession);
 
         start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
         System.out.println("\nRunning! Point your browsers to http://localhost:8080/ \n");

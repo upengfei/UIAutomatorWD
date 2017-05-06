@@ -1,7 +1,6 @@
 package com.macaca.android.testing.server.common;
 
 import android.support.test.uiautomator.Configurator;
-import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
@@ -32,7 +31,7 @@ public class Element {
 	 * @return res
 	 * @throws UiObjectNotFoundException
 	 */
-	public void click() throws UiObjectNotFoundException {
+	public void click() {
 		 element.click();
 	}
 
@@ -49,6 +48,10 @@ public class Element {
 	 */
 	public String getText() throws UiObjectNotFoundException {
 		return element.getText();
+	}
+
+	public void clearText() throws UiObjectNotFoundException {
+		element.clear();
 	}
 
 	/**
@@ -80,6 +83,10 @@ public class Element {
 		element.click();
 		Thread.sleep(100);
 		element.click();
+		return true;
+	}
+
+	public boolean isDisplayed() throws UiObjectNotFoundException {
 		return true;
 	}
 
