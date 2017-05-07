@@ -18,8 +18,8 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
 
     private String sessionRoutePrefix = "/wd/hub/session/:sessionId";
 
-    private UIAutomatorWDServer() throws IOException {
-        super(8080);
+    private UIAutomatorWDServer(int port) throws IOException {
+        super(port);
 
         //Home
         //addRoute(sessionRoutePrefix + "/", Methods.GET, HomeController.home);
@@ -86,12 +86,12 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
         System.out.println("\nRunning! Point your browsers to http://localhost:8080/ \n");
     }
 
-    public static UIAutomatorWDServer getInstance() {
+    public static UIAutomatorWDServer getInstance(int port) {
         if (singleton == null) {
             synchronized (UIAutomatorWDServer.class) {
                 if (singleton == null) {
                     try {
-                        singleton = new UIAutomatorWDServer();
+                        singleton = new UIAutomatorWDServer(port);
                     } catch (IOException ioe) {
                         System.err.println("Couldn't start server:\n" + ioe);
                     }

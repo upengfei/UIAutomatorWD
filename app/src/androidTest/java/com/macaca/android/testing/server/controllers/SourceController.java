@@ -60,9 +60,9 @@ public class SourceController extends RouterNanoHTTPD.DefaultHandler {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                JSONObject a = new JSONObject();
-                a.put("value", res);
-                return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(a, sessionId).toString());
+                JSONObject source = new JSONObject();
+                source.put("source", res);
+                return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(source, sessionId).toString());
             }
         };
     }
