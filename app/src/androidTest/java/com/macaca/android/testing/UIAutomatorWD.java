@@ -25,5 +25,5 @@ public class UIAutomatorWD {
             SystemClock.sleep(1000);
         }
     }
-    
+
 }

@@ -67,6 +67,9 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
         //SourceRouter
         addRoute(sessionRoutePrefix + "/source", Methods.GET, SourceController.source);
 
+        //KeysRouter
+        addRoute(sessionRoutePrefix + "/keys", Methods.POST, KeysController.keys);
+
         //TimeoutsRouter
         addRoute(sessionRoutePrefix + "/timeouts/implicit_wait", Methods.POST, TimeoutsController.implicitWait);
 
@@ -78,9 +81,9 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
         addRoute(sessionRoutePrefix + "/refresh", Methods.POST, UrlController.refresh);
 
         //SessionRouter
-        addRoute("/wd/hub/session", Methods.POST, SessionController.createSession);
-        addRoute("/wd/hub/sessions", Methods.GET, SessionController.getSessions);
-        addRoute("/wd/hub/session/:sessionId", Methods.DELETE, SessionController.delSession);
+//        addRoute("/wd/hub/session", Methods.POST, SessionController.createSession);
+//        addRoute("/wd/hub/sessions", Methods.GET, SessionController.getSessions);
+//        addRoute("/wd/hub/session/:sessionId", Methods.DELETE, SessionController.delSession);
 
         start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
         System.out.println("\nRunning! Point your browsers to http://localhost:8080/ \n");
