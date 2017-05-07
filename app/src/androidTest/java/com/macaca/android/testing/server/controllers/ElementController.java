@@ -24,6 +24,7 @@ import fi.iki.elonen.router.RouterNanoHTTPD;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +55,7 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                 String elementId = urlParams.get("elementId");
                 JSONObject result = null;
                 try {
-                    if (!elementId.isEmpty()) {
+                    if (elementId != null) {
                         Element el = getElements().getElement(elementId);
                         el.click();
                     } else {
@@ -79,8 +80,8 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                     session.parseBody(body);
                     String value = body.get("postData");
                     JSONObject postData = JSON.parseObject(value);
-                    String strategy = (String)postData.get("strategy");
-                    String text = (String) postData.get("selector");
+                    String strategy = (String)postData.get("using");
+                    String text = (String) postData.get("value");
                     strategy = strategy.trim().replace(" ", "_").toUpperCase();
                     try {
                         BySelector selector = getSelector(strategy, text);
@@ -106,8 +107,8 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                     session.parseBody(body);
                     String value = body.get("postData");
                     JSONObject postData = JSON.parseObject(value);
-                    String strategy = (String)postData.get("strategy");
-                    String text = (String) postData.get("selector");
+                    String strategy = (String)postData.get("using");
+                    String text = (String) postData.get("value");
                     strategy = strategy.trim().replace(" ", "_").toUpperCase();
                     try {
                         BySelector selector = getSelector(strategy, text);
@@ -132,11 +133,15 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                 JSONObject result = null;
                 try {
                     session.parseBody(body);
-                    String value = body.get("postData");
-                    JSONObject postData = JSON.parseObject(value);
-                    String text = (String)postData.get("text");
-                    Element element = getElements().getElement(elementId);
-                    element.setText(text);
+                    String postData = body.get("postData");
+
+                    JSONObject jsonObj = JSON.parseObject(postData);
+                    JSONArray values = (JSONArray)jsonObj.get("value");
+                    for (Iterator iterator = values.iterator(); iterator.hasNext();) {
+                        String value = (String) iterator.next();
+                        Element element = getElements().getElement(elementId);
+                        element.setText(value);
+                    }
                     return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(result, sessionId).toString());
                 } catch (final UiObjectNotFoundException e) {
                     return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(Status.NoSuchElement, sessionId).toString());
@@ -152,7 +157,7 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                 String sessionId = urlParams.get("sessionId");
                 try {
                     String elementId = urlParams.get("elementId");
-                    JSONObject result = null;
+                    JSONObject result = new JSONObject();
                     Element element = Elements.getGlobal().getElement(elementId);
                     result.put("value", element.getText());
                     return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(result, sessionId).toString());
@@ -328,6 +333,7 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                 selector = By.text(text);
                 break;
             case "ID":
+                selector = By.res(text);
                 break;
             case "XPATH":
                 break;

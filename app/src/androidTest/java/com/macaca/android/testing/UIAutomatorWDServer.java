@@ -18,8 +18,8 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
 
     private String sessionRoutePrefix = "/wd/hub/session/:sessionId";
 
-    private UIAutomatorWDServer() throws IOException {
-        super(8080);
+    private UIAutomatorWDServer(int port) throws IOException {
+        super(port);
 
         //Home
         //addRoute(sessionRoutePrefix + "/", Methods.GET, HomeController.home);
@@ -67,6 +67,9 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
         //SourceRouter
         addRoute(sessionRoutePrefix + "/source", Methods.GET, SourceController.source);
 
+        //KeysRouter
+        addRoute(sessionRoutePrefix + "/keys", Methods.POST, KeysController.keys);
+
         //TimeoutsRouter
         addRoute(sessionRoutePrefix + "/timeouts/implicit_wait", Methods.POST, TimeoutsController.implicitWait);
 
@@ -77,21 +80,24 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
         addRoute(sessionRoutePrefix + "/back", Methods.POST, UrlController.back);
         addRoute(sessionRoutePrefix + "/refresh", Methods.POST, UrlController.refresh);
 
+        //ActionRouter
+        addRoute(sessionRoutePrefix + "/actions", Methods.POST, ActionController.actions);
+
         //SessionRouter
-        addRoute("/wd/hub/session", Methods.POST, SessionController.createSession);
-        addRoute("/wd/hub/sessions", Methods.GET, SessionController.getSessions);
-        addRoute("/wd/hub/session/:sessionId", Methods.DELETE, SessionController.delSession);
+//        addRoute("/wd/hub/session", Methods.POST, SessionController.createSession);
+//        addRoute("/wd/hub/sessions", Methods.GET, SessionController.getSessions);
+//        addRoute("/wd/hub/session/:sessionId", Methods.DELETE, SessionController.delSession);
 
         start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
         System.out.println("\nRunning! Point your browsers to http://localhost:8080/ \n");
     }
 
-    public static UIAutomatorWDServer getInstance() {
+    public static UIAutomatorWDServer getInstance(int port) {
         if (singleton == null) {
             synchronized (UIAutomatorWDServer.class) {
                 if (singleton == null) {
                     try {
-                        singleton = new UIAutomatorWDServer();
+                        singleton = new UIAutomatorWDServer(port);
                     } catch (IOException ioe) {
                         System.err.println("Couldn't start server:\n" + ioe);
                     }

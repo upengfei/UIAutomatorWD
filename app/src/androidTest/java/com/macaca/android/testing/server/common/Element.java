@@ -1,5 +1,6 @@
 package com.macaca.android.testing.server.common;
 
+import android.graphics.Point;
 import android.support.test.uiautomator.Configurator;
 import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.UiObjectNotFoundException;
@@ -92,5 +93,20 @@ public class Element {
 
 	public UiObject2 getUiObject() {
 		return this.element;
+	}
+
+	public boolean pinch(String direction, float percent, int steps) throws UiObjectNotFoundException {
+		if (direction.equals("in")) {
+			element.pinchOpen(percent, steps);
+		} else if (direction.equals("out")) {
+			element.pinchClose(percent, steps);
+		}
+		return true;
+	}
+
+	public boolean drag(int x, int y, int steps) throws UiObjectNotFoundException {
+		Point point = new Point(x, y);
+		element.drag(point, steps);
+		return true;
 	}
 }

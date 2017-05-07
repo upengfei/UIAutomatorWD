@@ -1,5 +1,9 @@
 package com.macaca.android.testing.server.controllers;
 
+import android.app.Instrumentation;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.uiautomator.UiDevice;
+
 import com.macaca.android.testing.server.models.Methods;
 import com.macaca.android.testing.server.models.Response;
 import com.macaca.android.testing.server.models.Status;
@@ -67,8 +71,18 @@ public class WindowController extends RouterNanoHTTPD.DefaultHandler {
             @Override
             public NanoHTTPD.Response get(RouterNanoHTTPD.UriResource uriResource, Map<String, String> urlParams, NanoHTTPD.IHTTPSession session) {
                 String sessionId = urlParams.get("sessionId");
-
-                return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(Status.NoSuchElement, sessionId).toString());
+                try {
+                    Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+                    UiDevice mDevice = UiDevice.getInstance(instrumentation);
+                    Integer width = mDevice.getDisplayWidth();
+                    Integer height = mDevice.getDisplayHeight();
+                    JSONObject size = new JSONObject();
+                    size.put("width", width);
+                    size.put("height", height);
+                    return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(size, sessionId).toString());
+                } catch(Exception e) {
+                    return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(Status.UnknownError, sessionId).toString());
+                }
             }
         };
 
