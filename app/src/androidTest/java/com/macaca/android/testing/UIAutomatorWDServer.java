@@ -80,6 +80,9 @@ public class UIAutomatorWDServer extends RouterNanoHTTPD {
         addRoute(sessionRoutePrefix + "/back", Methods.POST, UrlController.back);
         addRoute(sessionRoutePrefix + "/refresh", Methods.POST, UrlController.refresh);
 
+        //ActionRouter
+        addRoute(sessionRoutePrefix + "/actions", Methods.POST, ActionController.actions);
+
         //SessionRouter
 //        addRoute("/wd/hub/session", Methods.POST, SessionController.createSession);
 //        addRoute("/wd/hub/sessions", Methods.GET, SessionController.getSessions);

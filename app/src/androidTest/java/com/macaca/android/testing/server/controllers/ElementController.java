@@ -142,7 +142,6 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                         Element element = getElements().getElement(elementId);
                         element.setText(value);
                     }
-
                     return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(result, sessionId).toString());
                 } catch (final UiObjectNotFoundException e) {
                     return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(Status.NoSuchElement, sessionId).toString());
@@ -158,7 +157,7 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                 String sessionId = urlParams.get("sessionId");
                 try {
                     String elementId = urlParams.get("elementId");
-                    JSONObject result = null;
+                    JSONObject result = new JSONObject();
                     Element element = Elements.getGlobal().getElement(elementId);
                     result.put("value", element.getText());
                     return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(result, sessionId).toString());
@@ -334,6 +333,7 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                 selector = By.text(text);
                 break;
             case "ID":
+                selector = By.res(text);
                 break;
             case "XPATH":
                 break;

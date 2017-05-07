@@ -7,7 +7,6 @@ import android.support.test.uiautomator.UiDevice;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.macaca.android.testing.server.models.Methods;
 import com.macaca.android.testing.server.models.Response;
 import com.macaca.android.testing.server.models.Status;
 
@@ -37,7 +36,6 @@ public class KeysController extends RouterNanoHTTPD.DefaultHandler {
                 JSONObject result = null;
                 try {
                     session.parseBody(body);
-String a = "";
                     String postData = body.get("postData");
                     JSONObject jsonObj = JSON.parseObject(postData);
                     JSONArray keycodes = (JSONArray)jsonObj.get("value");
