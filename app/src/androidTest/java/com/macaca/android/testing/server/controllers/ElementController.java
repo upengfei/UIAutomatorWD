@@ -11,11 +11,13 @@ import com.macaca.android.testing.server.common.Element;
 import com.macaca.android.testing.server.common.Elements;
 import com.macaca.android.testing.server.xmlUtils.InteractionController;
 import com.macaca.android.testing.server.xmlUtils.UiAutomatorBridge;
+import com.macaca.android.testing.server.xmlUtils.XmlUtils;
 
 import android.graphics.Rect;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.BySelector;
 import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.support.test.uiautomator.UiSelector;
 import android.view.KeyEvent;
 
 import fi.iki.elonen.NanoHTTPD;
@@ -336,8 +338,8 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                 selector = By.res(text);
                 break;
             case "XPATH":
-                break;
-            case "LINK_TEXT":
+                final ArrayList<BySelector> pairs = XmlUtils.getSelectors(text);
+                selector = pairs.get(0);
                 break;
         }
         return selector;
