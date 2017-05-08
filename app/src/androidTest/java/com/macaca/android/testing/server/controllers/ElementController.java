@@ -11,11 +11,13 @@ import com.macaca.android.testing.server.common.Element;
 import com.macaca.android.testing.server.common.Elements;
 import com.macaca.android.testing.server.xmlUtils.InteractionController;
 import com.macaca.android.testing.server.xmlUtils.UiAutomatorBridge;
+import com.macaca.android.testing.server.xmlUtils.XmlUtils;
 
 import android.graphics.Rect;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.BySelector;
 import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.support.test.uiautomator.UiSelector;
 import android.view.KeyEvent;
 
 import fi.iki.elonen.NanoHTTPD;
@@ -228,40 +230,18 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                 String elementId = urlParams.get("elementId");
                 try {
                     Element el = Elements.getGlobal().getElement(elementId);
-                    JSONObject text = new JSONObject();
-                    text.put("text", el.element.getText());
-                    JSONObject description = new JSONObject();
-                    description.put("description", el.element.getContentDescription());
-                    JSONObject enabled = new JSONObject();
-                    enabled.put("enabled", el.element.isEnabled());
-                    JSONObject checkable = new JSONObject();
-                    checkable.put("checkable", el.element.isCheckable());
-                    JSONObject checked = new JSONObject();
-                    checked.put("checked", el.element.isChecked());
-                    JSONObject clickable = new JSONObject();
-                    clickable.put("clickable", el.element.isClickable());
-                    JSONObject focusable = new JSONObject();
-                    focusable.put("focusable", el.element.isFocusable());
-                    JSONObject focused = new JSONObject();
-                    focused.put("focused", el.element.isFocused());
-                    JSONObject longClickable = new JSONObject();
-                    longClickable.put("longClickable", el.element.isLongClickable());
-                    JSONObject scrollable = new JSONObject();
-                    scrollable.put("scrollable", el.element.isScrollable());
-                    JSONObject selected = new JSONObject();
-                    selected.put("selected", el.element.isSelected());
                     JSONObject props = new JSONObject();
-                    props.put("text", text);
-                    props.put("description", description);
-                    props.put("enabled", enabled);
-                    props.put("checkable", checkable);
-                    props.put("checked", checked);
-                    props.put("clickable", clickable);
-                    props.put("focusable", focusable);
-                    props.put("focused", focused);
-                    props.put("longClickable", longClickable);
-                    props.put("scrollable", scrollable);
-                    props.put("selected", selected);
+                    props.put("text", el.element.getText());
+                    props.put("description", el.element.getContentDescription());
+                    props.put("enabled", el.element.isEnabled());
+                    props.put("checkable", el.element.isCheckable());
+                    props.put("checked", el.element.isChecked());
+                    props.put("clickable", el.element.isClickable());
+                    props.put("focusable", el.element.isFocusable());
+                    props.put("focused", el.element.isFocused());
+                    props.put("longClickable", el.element.isLongClickable());
+                    props.put("scrollable", el.element.isScrollable());
+                    props.put("selected", el.element.isSelected());
                     return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(props, sessionId).toString());
                 } catch (final Exception e) {
                     return NanoHTTPD.newFixedLengthResponse(getStatus(), getMimeType(), new Response(Status.UnknownError, sessionId).toString());
@@ -336,8 +316,8 @@ public class ElementController extends RouterNanoHTTPD.DefaultHandler {
                 selector = By.res(text);
                 break;
             case "XPATH":
-                break;
-            case "LINK_TEXT":
+                final ArrayList<BySelector> pairs = XmlUtils.getSelectors(text);
+                selector = pairs.get(0);
                 break;
         }
         return selector;

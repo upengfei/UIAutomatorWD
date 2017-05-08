@@ -2,9 +2,11 @@
 
 'use strict';
 
-const fs = require('fs');
 const path = require('path');
-const spawn = require('win-spawn');
-const JAVA_HOME = require('java-home');
+const gradle = require('gradle');
 
-const _ = require('../lib/helper');
+const cwd = path.join(__dirname, '..');
+
+gradle({
+  cwd: cwd
+});

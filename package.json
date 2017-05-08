@@ -12,10 +12,8 @@
     "url": "git://github.com/macacajs/uiautomatorwd.git"
   },
   "dependencies": {
-    "java-home": "~1.0.1",
     "macaca-adb": "~1.0.2",
     "request": "^2.81.0",
-    "win-spawn": "~2.0.0",
     "xlogger": "~1.0.0",
     "xutil": "~1.0.1"
   },

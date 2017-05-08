@@ -15,6 +15,8 @@
  */
 package com.macaca.android.testing.server.xmlUtils;
 
+import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.BySelector;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.support.test.uiautomator.UiSelector;
 
@@ -32,11 +34,11 @@ import java.util.HashMap;
 
 public class XmlUtils {
 
-    public static ArrayList<UiSelector> getSelectors(String xpathString) throws Exception {
+    public static ArrayList<BySelector> getSelectors(String xpathString) throws Exception {
         XPathExpression xpathExpression = compileXpath(xpathString);
         Node root = formatXmlHierarchy(getUiXmlHierarchyFromAndroid());
         NodeList nodes;
-        ArrayList<UiSelector> selectors = new ArrayList<UiSelector>();
+        ArrayList<BySelector> selectors = new ArrayList<BySelector>();
         try {
             nodes = (NodeList) xpathExpression.evaluate(root, XPathConstants.NODESET);
         } catch (XPathExpressionException e) {
@@ -58,11 +60,11 @@ public class XmlUtils {
 
     // get the UiSelector related to Xml Node
 
-    public static UiSelector getSelectorFromXmlNode(Node node) {
+    public static BySelector getSelectorFromXmlNode(Node node) {
         NamedNodeMap attrElements = node.getAttributes();
         String androidClass = attrElements.getNamedItem("class").getNodeValue();
         String instance = attrElements.getNamedItem("instance").getNodeValue();
-        return new UiSelector().className(androidClass).instance(Integer.parseInt(instance));
+        return By.clazz(androidClass);
     }
 
     public static XPathExpression compileXpath(String xpathExpression) throws Exception {
