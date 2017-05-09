@@ -485,6 +485,10 @@ public class RouterNanoHTTPD extends NanoHTTPD {
                     break;
                 }
             }
+
+            if (uriResource == null) {
+                return null;
+            }
             return uriResource.process(params, session);
         }
 
