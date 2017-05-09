@@ -4,10 +4,12 @@ jdk:
   - oraclejdk8
 android:
   components:
+    - tools
     - build-tools-25.0.2
-    - android-23
+    - platform-tools
     - extra-android-m2repository
-    - extra-android-support
+    - extra-google-android-support
+    - android-25
 env:
   - ANDROID_HOME=/usr/local/android-sdk
 before_script:
