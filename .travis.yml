@@ -1,5 +1,7 @@
 language: android
-sudo: false
+sudo: required
+os:
+  - linux
 jdk:
   - oraclejdk8
 android:
@@ -10,8 +12,6 @@ android:
     - extra-android-m2repository
     - extra-google-android-support
     - android-25
-env:
-  - ANDROID_HOME=/usr/local/android-sdk
 before_script:
     - wget http://services.gradle.org/distributions/gradle-3.3-all.zip
     - unzip gradle-3.3-all.zip
@@ -21,5 +21,5 @@ before_script:
     - nvm install 6
     - nvm use 6
     - npm install
-script: "make travis"
-after_script: "npm install coveralls@2 && cat ./coverage/lcov.info | coveralls"
+script:
+  - make travis
