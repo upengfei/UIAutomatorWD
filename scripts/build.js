@@ -8,5 +8,6 @@ const gradle = require('gradle');
 const cwd = path.join(__dirname, '..');
 
 gradle({
-  cwd: cwd
+  cwd: cwd,
+  command: 'assembleDebugAndroidTest'
 });
