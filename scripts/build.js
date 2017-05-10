@@ -9,5 +9,5 @@ const cwd = path.join(__dirname, '..');
 
 gradle({
   cwd: cwd,
-  command: 'assembleDebugAndroidTest'
+  args: ['assembleDebug', 'assembleDebugAndroidTest']
 });
