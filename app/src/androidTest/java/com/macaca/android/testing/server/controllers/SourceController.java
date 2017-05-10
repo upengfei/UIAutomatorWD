@@ -5,11 +5,7 @@ import android.os.Environment;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.UiDevice;
 
-import com.macaca.android.testing.server.models.Methods;
 import com.macaca.android.testing.server.models.Response;
-import com.macaca.android.testing.server.models.Status;
-
-import com.alibaba.fastjson.JSONObject;
 
 import org.apache.http.util.EncodingUtils;
 
@@ -18,7 +14,6 @@ import fi.iki.elonen.router.RouterNanoHTTPD;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
@@ -30,6 +25,8 @@ import java.util.Map;
 public class SourceController extends RouterNanoHTTPD.DefaultHandler {
 
     public static SourceController source;
+    Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+    UiDevice mDevice = UiDevice.getInstance(instrumentation);
 
     static {
         source = new SourceController() {
@@ -37,16 +34,11 @@ public class SourceController extends RouterNanoHTTPD.DefaultHandler {
             @Override
             public NanoHTTPD.Response get(RouterNanoHTTPD.UriResource uriResource, Map<String, String> urlParams, NanoHTTPD.IHTTPSession session) {
                 String sessionId = urlParams.get("sessionId");
-                final File dump = new File(Environment.getExternalStorageDirectory() + File.separator + dumpFileName);
-                dump.getParentFile().mkdirs();
-                if (dump.exists()) {
-                    dump.delete();
-                }
-                Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-                UiDevice mDevice = UiDevice.getInstance(instrumentation);
+                final File dump = new File(Environment.getDataDirectory() + File.separator + "local" + File.separator + "tmp" + File.separator + dumpFileName);
                 try {
                     mDevice.dumpWindowHierarchy(dump);
                 } catch (IOException e) {
+                    System.out.print(e);
                 }
                 dump.setReadable(true);
                 String res = "";
